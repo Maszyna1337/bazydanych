@@ -1,0 +1,35 @@
+CREATE TABLE postac(id_postaci INT PRIMARY KEY AUTO_INCREMENT, nazwa VARCHAR(40), rodzaj ENUM('wiking', 'ptak', 'kobieta'), data_ur DATE, wiek INT);
+INSERT INTO postac VALUES(null,'Bjorn','wiking','1640-01-01',100);
+INSERT INTO postac VALUES(null,'drozd','ptak','1650-01-01',90);
+INSERT INTO postac VALUES(null,'tesciowa','kobieta','1630-01-01',110);
+UPDATE postac SET wiek=88 WHERE id_postaci=3;
+
+CREATE TABLE walizka(id_walizki INT PRIMARY KEY AUTO_INCREMENT, pojemnosc INT, kolor ENUM ('rozowy','czerwony','teczowy','zolty'), id_wlasciciela INT, FOREIGN KEY(id_wlasciciela) REFERENCES postac1(id_postaci) ON DELETE SET null);
+ALTER TABLE walizka MODIFY kolor ENUM('rozowy','czerwony','teczowy','zolty') DEFAULT 'rozowy';
+INSERT INTO walizka VALUES(null, 10, 'rozowy', 1);
+INSERT INTO walizka VALUES(null, 14, 'czerwony', 3);
+
+CREATE TABLE izba(adres_budynku INT, nazwa_izby VARCHAR(20), PRIMARY KEY(adres_budynku, nazwa_izby), metraz INT,wlasciciel INT, FOREIGN KEY(wlasciciel) REFERENCES postac(id_postaci));
+ALTER TABLE izba ADD kolor VARCHAR(40) DEFAULT 'czarny' AFTER metraz;
+INSERT INTO izba VALUES(12, 'spizarnia','czarny', 20,1);
+
+CREATE TABLE przetwory(id_przetworu INT PRIMARY KEY, rok_produkcji YEAR DEFAULT 1954, id_wykonawcy INT, FOREIGN KEY(id_wykonawcy) REFERENCES postac(id_postaci), zawartosc VARCHAR(20),dodatek VARCHAR(20) DEFAULT 'papryczka chilli',id_konsumenta INT, FOREIGN KEY(id_konsumenta) REFERENCES postac(id_postaci));
+INSERT INTO przetwory VALUES(1,1954,1,'bigos','papryczka chilli',3);
+
+INSERT INTO postac VALUES(null,'Magnus','wiking','1640-01-01',100),(null,'Odyn','wiking','1640-01-01',100),(null,'Thor','wiking','1640-01-01',100),(null,'Loki','wiking','1640-01-01',100),(null,'Stefan','wiking','1640-01-01',100);
+CREATE TABLE statek(nazwa_statku VARCHAR(40) PRIMARY KEY, rodzaj ENUM('kajak','lodz','galera'),data_wodowania DATE, max_ladownosc INT);
+INSERT INTO statek VALUES('Meduza','lodz','2022-01-10',5000),('Tytanic','galera','2022-01-10',50000);
+ALTER TABLE postac ADD funkcja VARCHAR(40);
+UPDATE postac SET funkcja='Kapitan' WHERE id_postaci=1;
+ALTER TABLE postac ADD (statek VARCHAR(40), FOREIGN KEY(statek) REFERENCES statek(nazwa_statku));
+UPDATE postac SET statek='Tytanic' WHERE rodzaj='wiking';
+UPDATE postac1 SET statek='Tytanic' WHERE rodzaj='ptak';
+DELETE FROM izba WHERE nazwa_izby='spizarnia';
+DROP TABLE izba;
+
+
+
+
+
+
+
