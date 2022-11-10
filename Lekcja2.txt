@@ -1,0 +1,28 @@
+DELETE FROM postac1 WHERE id_postaci>=8;
+ALTER TABLE postac1 DROP FOREIGN KEY postac1_ibfk_1;
+ALTER TABLE postac1 DROP PRIMARY KEY(id_postaci);
+
+ALTER TABLE postac1 ADD pesel CHAR(11);
+ALTER TABLE postac1 ADD PRIMARY KEY(pesel);
+ALTER TABLE postac1 MODIFY rodzaj enum('wiking','ptak','kobieta','syrena');
+INSERT INTO postac1 VALUES('Gertruda Nikczemna','syrena','1640-01-01',50,NULL,NULL);
+
+UPDATE postac1 SET statek='Tytanic' WHERE nazwa LIKE '%a%'; 
+UPDATE statek SET max_ladownosc=max_ladownosc-max_ladownosc*0.3 WHERE data_wodowania>"1901-01-01";
+UPDATE postac1 SET wiek=wiek*0 WHERE wiek>1000;
+
+INSERT INTO postac1 VALUES('Waz Loko',NULL,'1700-01-01',322,NULL,NULL);
+CREATE TABLE marynarz(nazwa VARCHAR(40),rodzaj enum('wiking','ptak','kobieta','syrena'), data_urodzenia DATE, wiek INT, funkcja VARCHAR(40), statek VARCHAR(40), pesel char(11)PRIMARY KEY)
+INSERT INTO marynarz SELECT * FROM postac1 WHERE statek='Tytanic';
+ALTER TABLE marynarz ADD FOREIGN KEY(statek) REFERENCES statek(nazwa_statku);
+
+UPDATE postac1 SET statek=NULL WHERE statek="Tytanic";
+DELETE FROM postac1 WHERE nazwa="Thor";
+DELETE FROM statek;
+DROP TABLE statek;
+	ALTER TABLE postac1 MODIFY rodzaj ENUM('wiking','ptak','kobieta','syrena', 'zwierz');
+	UPDATE postac1 SET rodzaj="zwierz" WHERE nazwa="drozd";
+	UPDATE postac1 SET rodzaj="zwierz" WHERE wiek=50;
+	UPDATE postac1 SET rodzaj="zwierz" WHERE wiek=322;
+INSERT INTO zwierz(nazwa, wiek) SELECT nazwa, wiek FROM postac1 WHERE rodzaj='zwierz';
+
