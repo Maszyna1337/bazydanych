@@ -4,12 +4,12 @@ INSERT INTO postac VALUES(null,'drozd','ptak','1650-01-01',90);
 INSERT INTO postac VALUES(null,'tesciowa','kobieta','1630-01-01',110);
 UPDATE postac SET wiek=88 WHERE id_postaci=3;
 
-CREATE TABLE walizka(id_walizki INT PRIMARY KEY AUTO_INCREMENT, pojemnosc INT, kolor ENUM ('rozowy','czerwony','teczowy','zolty'), id_wlasciciela INT, FOREIGN KEY(id_wlasciciela) REFERENCES postac1(id_postaci) ON DELETE SET null);
+CREATE TABLE walizka(id_walizki INT PRIMARY KEY AUTO_INCREMENT, pojemnosc INT, kolor ENUM ('rozowy','czerwony','teczowy','zolty'), id_wlasciciela INT, FOREIGN KEY(id_wlasciciela) REFERENCES postac1(id_postaci) ON DELETE CASCADE);
 ALTER TABLE walizka MODIFY kolor ENUM('rozowy','czerwony','teczowy','zolty') DEFAULT 'rozowy';
 INSERT INTO walizka VALUES(null, 10, 'rozowy', 1);
 INSERT INTO walizka VALUES(null, 14, 'czerwony', 3);
 
-CREATE TABLE izba(adres_budynku INT, nazwa_izby VARCHAR(20), PRIMARY KEY(adres_budynku, nazwa_izby), metraz INT,wlasciciel INT, FOREIGN KEY(wlasciciel) REFERENCES postac(id_postaci));
+CREATE TABLE izba(adres_budynku INT, nazwa_izby VARCHAR(20), PRIMARY KEY(adres_budynku, nazwa_izby), metraz INT,wlasciciel INT, FOREIGN KEY(wlasciciel) REFERENCES postac(id_postaci) ON DELETE SET NULL);
 ALTER TABLE izba ADD kolor VARCHAR(40) DEFAULT 'czarny' AFTER metraz;
 INSERT INTO izba VALUES(12, 'spizarnia','czarny', 20,1);
 
@@ -23,7 +23,7 @@ ALTER TABLE postac ADD funkcja VARCHAR(40);
 UPDATE postac SET funkcja='Kapitan' WHERE id_postaci=1;
 ALTER TABLE postac ADD (statek VARCHAR(40), FOREIGN KEY(statek) REFERENCES statek(nazwa_statku));
 UPDATE postac SET statek='Tytanic' WHERE rodzaj='wiking';
-UPDATE postac1 SET statek='Tytanic' WHERE rodzaj='ptak';
+UPDATE postac SET statek='Tytanic' WHERE rodzaj='ptak';
 DELETE FROM izba WHERE nazwa_izby='spizarnia';
 DROP TABLE izba;
 
