@@ -15,5 +15,5 @@
 4.3.    SELECT *, ilosc*waga AS 'waga_calkowita' FROM zasob WHERE dataPozyskania BETWEEN '2000-01-01' AND '2007-12-31';
 5.1. 	SELECT waga*0.7 AS 'masa_netto', waga*0.3 AS 'waga_odpadow' FROM zasob WHERE rodzaj='jedzenie';
 5.2.    SELECT * FROM zasob WHERE rodzaj IS NULL;
-5.3.    SELECT DISTINCT(rodzaj), nazwa  FROM zasob WHERE nazwa LIKE 'Ba%' OR nazwa LIKE '%os' ORDER BY nazwa;
+5.3.    SELECT DISTINCT(rodzaj) FROM zasob WHERE nazwa LIKE 'Ba%' OR nazwa LIKE '%os' ORDER BY nazwa;
 
